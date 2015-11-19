@@ -27,6 +27,15 @@ func FileExists(path string) bool {
 	}
 	return !fi.IsDir()
 }
+
+// check the given directory exists or not
+func DirectoryExists(path string) bool {
+	fi, err := os.Stat(path)
+	if err != nil {
+		return false
+	}
+	return fi.IsDir()
+}
 func resetReadOnlyFlagAll(path string) error {
 
 	fi, err := os.Stat(path)
