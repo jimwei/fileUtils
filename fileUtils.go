@@ -19,9 +19,22 @@ func RemoveAllEx(path string) error {
 	return os.RemoveAll(path)
 }
 
-func resetReadOnlyFlagAll(path string) error {
+// check the given file exists or not
+func FileExists(path string) bool {
 	fi, err := os.Stat(path)
 	if err != nil {
+		return false
+	}
+	return !fi.IsDir()
+}
+func resetReadOnlyFlagAll(path string) error {
+
+	fi, err := os.Stat(path)
+	if err != nil {
+		//the directory not exists
+		if os.IsNotExist(err) {
+			return nil
+		}
 		return err
 	}
 	if !fi.IsDir() {
